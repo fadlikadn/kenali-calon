@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Resources:
+- Peta Dapil Wonosobo: https://sidapil.kpu.go.id/api/petadapil/2024/33/07/1
+- DPR Pusat - Dapil Jateng 6: https://id.wikipedia.org/wiki/Jawa_Tengah_VI_(daerah_pemilihan)
+- DPRD Jateng - Dapil 9: https://www.detik.com/jateng/berita/d-7060639/daftar-pembagian-dapil-dprd-jateng-dan-alokasi-kursinya
+
+
