@@ -38,6 +38,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Resources:
 - Peta Dapil Wonosobo: https://sidapil.kpu.go.id/api/petadapil/2024/33/07/1
 - DPR Pusat - Dapil Jateng 6: https://id.wikipedia.org/wiki/Jawa_Tengah_VI_(daerah_pemilihan)
-- DPRD Jateng - Dapil 9: https://www.detik.com/jateng/berita/d-7060639/daftar-pembagian-dapil-dprd-jateng-dan-alokasi-kursinya
+- DPRD Jateng - Dapil 9: https://www.detik.com/jateng/berita/d-7060639/daftar-pembagian-dapil-dprd-jateng-dan-alokasi-kursinya, https://dprd.jatengprov.go.id/dapil/#1571128594902-025f360b-f646
 
-
+## TODO:
+- Create Grid Gallery berisi Calon Tetap Legislatif DPRD Kab, DPRD Jateng, DPRD Pusat
+- Create Filter input untuk melakukan filter data berdasarkan nama calon, domisili calon, kecamatan dapil, jenis kelamin, dapil, partai
+- Adjust color theme
+- Prepare deployment setting vercel
+- Setup domain, contact stakeholder
+- Scale up? Apakah bisa untuk lingkup yang lebih luas? apakah relevan dengan domain yang nantinya akan digunakan?
