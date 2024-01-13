@@ -4,7 +4,7 @@
 
 import { DataCalonLegislatif } from "@/types/generic"
 
-export const WonosoboDapil5Raw = [
+export const DPRD_WONOSOBO_DAPIL5_RAW = [
   [
     " <img src=\"../berkas-sipol/parpol/profil/gambar_parpol/1656538128_Logo PKB.png\" width=\"30\" > Partai Kebangkitan Bangsa",
     "<center><i>Dapil</i><br>WONOSOBO 5</center>",
@@ -788,7 +788,7 @@ export const WonosoboDapil5Raw = [
   ]
 ]
 
-export const WonosoboDapil5: DataCalonLegislatif[] = [
+export const DPRD_WONOSOBO_DAPIL5: DataCalonLegislatif[] = [
   {
     partai: 'Partai Kebangkitan Bangsa',
     dapil: 'WONOSOBO 5',
