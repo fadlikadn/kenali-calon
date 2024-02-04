@@ -2,6 +2,8 @@
 
 import { DCT_DPRD_WONOSOBO } from "@/data/dprd_kab/data"
 import { DataCalonLegislatif } from "@/types/generic"
+import { shuffleArray } from "@/utils/generic"
+import useDebounce from "@/utils/hooks/useDebounce"
 import { Button } from "flowbite-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -33,6 +35,7 @@ const HomePage = () => {
   const onPageChangeClick = (i: number) => {
     setPage(i + 1)
   }
+  const debouncedKeyword = useDebounce({ value: keyword })
 
   useEffect(() => {
     const slicedData = sliceDctData(dctList, page, viewSize)
@@ -40,9 +43,13 @@ const HomePage = () => {
   }, [page, viewSize, dctList])
 
   useEffect(() => {
-    const filterdData = searchKeyword(keyword, DCT_DPRD_WONOSOBO)
-    setDctList(filterdData)
-  }, [keyword])
+    let filteredData = searchKeyword(debouncedKeyword, DCT_DPRD_WONOSOBO)
+    if (debouncedKeyword === '') {
+      console.log('filteredData', filteredData)
+      filteredData = shuffleArray(filteredData)
+    }
+    setDctList(filteredData)
+  }, [debouncedKeyword])
 
   return (
     <>
@@ -79,7 +86,7 @@ const HomePage = () => {
                 <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">{person.nama}</h5>
                 <div>
                   <div>
-                    <Image src={person.foto} alt={person.nama} style={{ width: '100%', height: 'auto' }} width={250} height={250} />
+                    <Image src={person.foto} alt={person.nama} style={{ width: '100%', height: 'auto' }} width={250} height={250} placeholder="blur" />
                   </div>
                   <div>Domisili: {person.daerah}</div>
                   <div>Dapil: {person.dapil}</div>
