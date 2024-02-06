@@ -2,6 +2,7 @@
 
 import { DCT_DPRD_WONOSOBO } from "@/data/dprd_kab/data"
 import { DataCalonLegislatif } from "@/types/generic"
+import { defaultBlurDataURL } from "@/utils/blurDefault"
 import { shuffleArray } from "@/utils/generic"
 import useDebounce from "@/utils/hooks/useDebounce"
 import { Button } from "flowbite-react"
@@ -21,7 +22,7 @@ const searchKeyword = (keyword: string, data: DataCalonLegislatif[]): DataCalonL
       value.toLowerCase().includes(keyword.toLowerCase())
     )
   })
-  
+
   return result
 }
 
@@ -44,10 +45,9 @@ const HomePage = () => {
 
   useEffect(() => {
     let filteredData = searchKeyword(debouncedKeyword, DCT_DPRD_WONOSOBO)
-    if (debouncedKeyword === '') {
-      console.log('filteredData', filteredData)
-      filteredData = shuffleArray(filteredData)
-    }
+    // if (debouncedKeyword === '') {
+    //   filteredData = shuffleArray(filteredData)
+    // }
     setDctList(filteredData)
   }, [debouncedKeyword])
 
@@ -56,15 +56,15 @@ const HomePage = () => {
       <div className="max-w-screen-xl items-center mx-auto p-4 gap-2">
         <div className="relative mb-1">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-              </svg>
+            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg>
           </div>
-          <input 
-            type="search" 
-            id="default-search" 
-            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-            placeholder="Cari berdasarkan apa saja..." 
+          <input
+            type="search"
+            id="default-search"
+            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Cari berdasarkan apa saja..."
             onChange={(e) => {
               setKeyword(e.target.value)
             }}
@@ -74,19 +74,19 @@ const HomePage = () => {
 
         <div className="flex flex-row gap-1">
           {[...Array(totalPages)].map((_, i) => (
-            <Button size="xs" color={page === (i + 1) ? 'blue' : 'gray'} key={i} onClick={() => onPageChangeClick(i)}>{i+1}</Button>
+            <Button size="xs" color={page === (i + 1) ? 'blue' : 'gray'} key={i} onClick={() => onPageChangeClick(i)}>{i + 1}</Button>
           ))}
         </div>
       </div>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 gap-2">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {dctListPerPage.map((person, index) => {
             return (
               <div key={index} className="block p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">{person.nama}</h5>
                 <div>
                   <div>
-                    <Image src={person.foto} alt={person.nama} style={{ width: '100%', height: 'auto' }} width={250} height={250} placeholder="blur" />
+                    <Image src={person.foto} alt={person.nama} style={{ width: '100%', height: 'auto' }} width={250} height={250} placeholder="blur" blurDataURL={defaultBlurDataURL} />
                   </div>
                   <div>Domisili: {person.daerah}</div>
                   <div>Dapil: {person.dapil}</div>
