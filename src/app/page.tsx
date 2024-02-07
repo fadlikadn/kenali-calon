@@ -26,11 +26,52 @@ const searchKeyword = (keyword: string, data: DataCalonLegislatif[]): DataCalonL
   return result
 }
 
+const KECAMATAN_WONOSOBO = {
+  WONOSOBO: 'Wonosobo',
+  SELOMERTO: 'Selomerto',
+  LEKSONO: 'Leksono',
+  WATUMALANG: 'Watumalang',
+  SUKOHARJO: 'Sukoharjo',
+  MOJOTENGAH: 'Mojotengah',
+  GARUNG: 'Garung',
+  KEJAJAR: 'Kejajar',
+  KALIKAJAR: 'Kalikajar',
+  KERTEK: 'Kertek',
+  KEPIL: 'Kepil',
+  SAPURAN: 'Sapuran',
+  WADASLINTANG: 'Wadaslintang',
+  KALIWIRO: 'Kaliwiro',
+  KALIBAWANG: 'Kalibawang'
+}
+
+const MAPPING_KECAMATAN_DAPIL = {
+  [KECAMATAN_WONOSOBO.WONOSOBO]: 'WONOSOBO 1',
+  [KECAMATAN_WONOSOBO.SELOMERTO]: 'WONOSOBO 1',
+  [KECAMATAN_WONOSOBO.LEKSONO]: 'WONOSOBO 2',
+  [KECAMATAN_WONOSOBO.WATUMALANG]: 'WONOSOBO 2',
+  [KECAMATAN_WONOSOBO.SUKOHARJO]: 'WONOSOBO 2',
+  [KECAMATAN_WONOSOBO.MOJOTENGAH]: 'WONOSOBO 3',
+  [KECAMATAN_WONOSOBO.GARUNG]: 'WONOSOBO 3',
+  [KECAMATAN_WONOSOBO.KEJAJAR]: 'WONOSOBO 3',
+  [KECAMATAN_WONOSOBO.KALIKAJAR]: 'WONOSOBO 4',
+  [KECAMATAN_WONOSOBO.KERTEK]: 'WONOSOBO 4',
+  [KECAMATAN_WONOSOBO.KEPIL]: 'WONOSOBO 5',
+  [KECAMATAN_WONOSOBO.SAPURAN]: 'WONOSOBO 5',
+  [KECAMATAN_WONOSOBO.WADASLINTANG]: 'WONOSOBO 6',
+  [KECAMATAN_WONOSOBO.KALIWIRO]: 'WONOSOBO 6',
+  [KECAMATAN_WONOSOBO.KALIBAWANG]: 'WONOSOBO 6'
+}
+
+const randomDefaultData = shuffleArray(DCT_DPRD_WONOSOBO)
+
 const HomePage = () => {
-  const [viewSize, setViewSize] = useState<number>(50)
+  const [viewSize, _setViewSize] = useState<number>(50)
   const [page, setPage] = useState<number>(1)
   const [keyword, setKeyword] = useState<string>('')
-  const [dctList, setDctList] = useState(DCT_DPRD_WONOSOBO)
+  const [dctList, setDctList] = useState(randomDefaultData)
+  const [selectedKecamatan, setSelectedKecamatan] = useState<string[]>([])
+  const [selectedDapil, setSelectedDapil] = useState<string[]>([])
+  const [isChange, setChange] = useState<boolean>(false)
   const [dctListPerPage, setDctListPerPage] = useState(sliceDctData(dctList, page, viewSize))
   const totalPages = Math.ceil(dctList.length / viewSize)
   const onPageChangeClick = (i: number) => {
@@ -38,18 +79,46 @@ const HomePage = () => {
   }
   const debouncedKeyword = useDebounce({ value: keyword })
 
+  const selectKecamatan = (kecamatan: string) => {
+    if (kecamatan !== '') {
+      if (selectedKecamatan.includes(kecamatan)) {
+        setSelectedKecamatan(selectedKecamatan.filter((item) => item !== kecamatan))
+        setSelectedDapil(selectedDapil.filter((item) => item !== MAPPING_KECAMATAN_DAPIL[kecamatan]))
+      } else {
+        setSelectedKecamatan([...selectedKecamatan, kecamatan])
+        setSelectedDapil([...selectedDapil, MAPPING_KECAMATAN_DAPIL[kecamatan]])
+      }
+    }
+  }
+
+  const clearFilter = () => {
+    setSelectedKecamatan([])
+  }
+
   useEffect(() => {
     const slicedData = sliceDctData(dctList, page, viewSize)
     setDctListPerPage(slicedData)
   }, [page, viewSize, dctList])
 
   useEffect(() => {
+    setSelectedDapil(selectedKecamatan.map((item) => MAPPING_KECAMATAN_DAPIL[item]))
+  }, [selectedKecamatan])
+
+  useEffect(() => {
     let filteredData = searchKeyword(debouncedKeyword, DCT_DPRD_WONOSOBO)
+    if (selectedKecamatan.length > 0) {
+      filteredData = filteredData.filter((item) => selectedDapil.includes(item.dapil))
+      setDctList(shuffleArray(filteredData))
+      setChange(true)
+    }
     // if (debouncedKeyword === '') {
     //   filteredData = shuffleArray(filteredData)
     // }
-    setDctList(filteredData)
-  }, [debouncedKeyword])
+    if (debouncedKeyword !== '') setChange(true)
+    if (debouncedKeyword !== '' || isChange) {
+      setDctList(filteredData)
+    }
+  }, [debouncedKeyword, selectedDapil])
 
   return (
     <>
@@ -72,10 +141,19 @@ const HomePage = () => {
           <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cari</button>
         </div>
 
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row gap-1 my-2">
           {[...Array(totalPages)].map((_, i) => (
             <Button size="xs" color={page === (i + 1) ? 'blue' : 'gray'} key={i} onClick={() => onPageChangeClick(i)}>{i + 1}</Button>
           ))}
+        </div>
+
+        <div className="flex flex-wrap flex-row gap-1 my-2">
+          {Object.values(KECAMATAN_WONOSOBO).map((kecamatan) => {
+            return (
+              <Button color={selectedKecamatan.includes(kecamatan) ? 'blue' : 'light'} size="xs" onClick={() => selectKecamatan(kecamatan)}>{kecamatan}</Button>
+            )
+          })}
+          <Button size="xs" color="success" onClick={clearFilter}>Bersihkan Filter</Button>
         </div>
       </div>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 gap-2">
