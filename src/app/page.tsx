@@ -118,6 +118,7 @@ const HomePage = () => {
     if (debouncedKeyword !== '' || isChange) {
       setDctList(filteredData)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedKeyword, selectedDapil])
 
   return (
@@ -150,7 +151,7 @@ const HomePage = () => {
         <div className="flex flex-wrap flex-row gap-1 my-2">
           {Object.values(KECAMATAN_WONOSOBO).map((kecamatan) => {
             return (
-              <Button color={selectedKecamatan.includes(kecamatan) ? 'blue' : 'light'} size="xs" onClick={() => selectKecamatan(kecamatan)}>{kecamatan}</Button>
+              <Button key={kecamatan} color={selectedKecamatan.includes(kecamatan) ? 'blue' : 'light'} size="xs" onClick={() => selectKecamatan(kecamatan)}>{kecamatan}</Button>
             )
           })}
           <Button size="xs" color="success" onClick={clearFilter}>Bersihkan Filter</Button>
