@@ -128,7 +128,6 @@ const HomePage = () => {
   const onCalonClick = (person: DataCalonLegislatif) => {
     const url = `https://caleg.zakiego.com/api/dprd-kabupaten-kota/calon/${toSnakeCaseWithDash(person.dapil)}/${toSnakeCaseWithDash(person.partai)}/${person.noUrut}`
     fetch(url).then((res) => res.json()).then((data: ResponseData<CalonLegislatifTingkat2[]>) => {
-      console.log('res', data.data[0])
       setSelectedCalon(data.data[0])
       setDialogOpen(true)
       // TODO: open dialog contain detail calon
