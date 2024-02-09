@@ -5,3 +5,7 @@ export const shuffleArray = (array: any[]) => {
   }
   return array;
 }
+
+export const toSnakeCaseWithDash = (str: string): string => {
+  return str.split(' ').join('-').toLowerCase();
+}

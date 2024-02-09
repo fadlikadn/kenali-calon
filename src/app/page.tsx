@@ -1,11 +1,12 @@
 'use client'
 
+import DetailCalegTingkat2 from "@/components/DetailCalegTingkat2"
 import { DCT_DPRD_WONOSOBO } from "@/data/dprd_kab/data"
-import { DataCalonLegislatif } from "@/types/generic"
+import { CalonLegislatifTingkat2, DataCalonLegislatif, ResponseData } from "@/types/generic"
 import { defaultBlurDataURL } from "@/utils/blurDefault"
-import { shuffleArray } from "@/utils/generic"
+import { shuffleArray, toSnakeCaseWithDash } from "@/utils/generic"
 import useDebounce from "@/utils/hooks/useDebounce"
-import { Button } from "flowbite-react"
+import { Button, Modal } from "flowbite-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
@@ -73,6 +74,9 @@ const HomePage = () => {
   const [selectedDapil, setSelectedDapil] = useState<string[]>([])
   const [isChange, setChange] = useState<boolean>(false)
   const [dctListPerPage, setDctListPerPage] = useState(sliceDctData(dctList, page, viewSize))
+  const [isDialogOpen, setDialogOpen] = useState<boolean>(false)
+  const [selectedCalon, setSelectedCalon] = useState<CalonLegislatifTingkat2 | null>(null)
+
   const totalPages = Math.ceil(dctList.length / viewSize)
   const onPageChangeClick = (i: number) => {
     setPage(i + 1)
@@ -121,6 +125,16 @@ const HomePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedKeyword, selectedDapil])
 
+  const onCalonClick = (person: DataCalonLegislatif) => {
+    const url = `https://caleg.zakiego.com/api/dprd-kabupaten-kota/calon/${toSnakeCaseWithDash(person.dapil)}/${toSnakeCaseWithDash(person.partai)}/${person.noUrut}`
+    fetch(url).then((res) => res.json()).then((data: ResponseData<CalonLegislatifTingkat2[]>) => {
+      console.log('res', data.data[0])
+      setSelectedCalon(data.data[0])
+      setDialogOpen(true)
+      // TODO: open dialog contain detail calon
+    })
+  }
+
   return (
     <>
       <div className="max-w-screen-xl items-center mx-auto p-4 gap-2">
@@ -161,7 +175,7 @@ const HomePage = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {dctListPerPage.map((person, index) => {
             return (
-              <div key={index} className="block p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+              <div key={index} className="block p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700" onClick={() => onCalonClick(person)}>
                 <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">{person.nama}</h5>
                 <div>
                   <div>
@@ -177,6 +191,17 @@ const HomePage = () => {
           })}
         </div>
       </div>
+      <Modal show={isDialogOpen} onClose={() => setDialogOpen(false)} size="4xl">
+        <Modal.Header>{selectedCalon?.nama}</Modal.Header>
+        <Modal.Body>
+          <div className="p-2">
+            <DetailCalegTingkat2 data={selectedCalon} />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color="success" onClick={() => setDialogOpen(false)}>Tutup</Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }
