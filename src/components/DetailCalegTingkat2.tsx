@@ -25,7 +25,28 @@ const DetailCalegTingkat2: FC<{ data: CalonLegislatifTingkat2 | null }> = ({ dat
                 <p>Agama: {data.agama}</p>
                 <p>Status Disabilitas: {data.statusDisabilitas}</p>
                 <p>Pekerjaan: {data.pekerjaan}</p>
+                <p>Status Hukum: {data.statusHukum}</p>
               </div>
+
+              {/* Displaying Program Usulan */}
+              {data.programUsulan && data.programUsulan.length > 0 && (
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Program Usulan</h3>
+                  {data.programUsulan.map((program: string, index: number) => (
+                    <p key={index}>{program}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* Displaying Motivasi */}
+              {data.motivasi && data.motivasi.length > 0 && (
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Motivasi</h3>
+                  {data.motivasi.map((motivasi: string, index: number) => (
+                    <p key={index}>{motivasi}</p>
+                  ))}
+                </div>
+              )}
 
               {/* Displaying RiwayatPekerjaan */}
               {data.riwayatPekerjaan && data.riwayatPekerjaan.length > 0 && (
