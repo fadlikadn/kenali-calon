@@ -99,7 +99,7 @@ const KonsituenDPRD2Page = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {dctListPerPage.map((person, index) => {
             return (
-              <CalegCard index={index} person={person} onCalonClick={onCalonClick} />
+              <CalegCard key={index} index={index} person={person} onCalonClick={onCalonClick} />
             )
           })}
         </div>
