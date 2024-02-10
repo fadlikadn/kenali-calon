@@ -8,7 +8,7 @@ import { Analytics } from '@vercel/analytics/react'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Kenali Calon Wonosobo',
+  title: 'Caleg Wonosobo',
   description: 'Calon legislatif 2024 area Wonosobo Jawa Tengah',
 }
 
