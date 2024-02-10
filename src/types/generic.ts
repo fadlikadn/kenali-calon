@@ -15,7 +15,7 @@ export interface DataCalonLegislatif {
   note2: string
 }
 
-export interface CalonLegislatifTingkat2 {
+export interface CalonLegislatif {
   id: string
   namaPartai: string
   logoPartai: string

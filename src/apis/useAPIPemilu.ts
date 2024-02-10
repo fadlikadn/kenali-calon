@@ -1,4 +1,4 @@
-import { CalonLegislatifTingkat2, ResponseData } from "@/types/generic"
+import { CalonLegislatif, ResponseData } from "@/types/generic"
 import { useQuery } from "@tanstack/react-query"
 
 export const useQueryAPIDCTDPRD = () => {
@@ -29,7 +29,7 @@ export const useQueryAPIDetailCalegDPRD2 = ({
   enabled,
 }: useQueryAPIDetailCalegDPRD2Props) => {
   const url = `https://caleg.zakiego.com/api/dprd-kabupaten-kota/calon/${dapil}/${partai}/${noUrut}`
-  return useQuery<ResponseData<CalonLegislatifTingkat2>>({
+  return useQuery<ResponseData<CalonLegislatif>>({
     queryKey: ['DetailCalegDPRD2', dapil, partai, noUrut],
     enabled,
     queryFn: async () => {

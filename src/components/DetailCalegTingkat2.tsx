@@ -1,10 +1,10 @@
 // Import necessary libraries
-import { CalonLegislatifTingkat2, RiwayatKursusDiklat, RiwayatOrganisasi, RiwayatPekerjaan, RiwayatPendidikan, RiwayatPenghargaan } from '@/types/generic';
+import { CalonLegislatif, RiwayatKursusDiklat, RiwayatOrganisasi, RiwayatPekerjaan, RiwayatPendidikan, RiwayatPenghargaan } from '@/types/generic';
 import Image from 'next/image';
 import { FC } from 'react';
 
 // Define the component using the provided data model
-const DetailCalegTingkat2: FC<{ data: CalonLegislatifTingkat2 | null }> = ({ data }) => {
+const DetailCalegTingkat2: FC<{ data: CalonLegislatif | null }> = ({ data }) => {
   return (
     <>
       {
