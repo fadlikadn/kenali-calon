@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Header = () => {
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded className="max-w-screen-xl items-center mx-auto">
       <Navbar.Brand as={Link} href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Caleg Wonosobo</span>
       </Navbar.Brand>
